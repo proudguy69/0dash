@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 
 
 
@@ -19,10 +19,11 @@ async function getSession() {
 
 // on first load
 onMounted(async ()=> {
-    session_data.value = getSession()
+    session_data.value = await  getSession()
 })
 
 
+provide('session_data',session_data)
 </script>
 
 <style>

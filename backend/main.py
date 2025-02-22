@@ -5,7 +5,7 @@ from flask import Flask, request, session, jsonify, redirect
 
 API_ENDPOINT = 'https://discord.com/api/v10'
 CLIENT_ID = '1342691151693615225'
-REDIRECT_URI = 'localhost:5174/'
+REDIRECT_URI = 'http://localhost:5173/api/authorize'
 
 def exchange_code(code):
   data = {
@@ -17,6 +17,7 @@ def exchange_code(code):
     'Content-Type': 'application/x-www-form-urlencoded'
   }
   r = requests.post(f'{API_ENDPOINT}/oauth2/token', data=data, headers=headers, auth=(CLIENT_ID, CLIENT_SECRET))
+  print(r.json())
   return r.json()
 
 
@@ -34,7 +35,7 @@ def authorize():
 @app.route('/api/get/session')
 def get_session():
   session_data = session.get('access', None)
-  return jsonify({'sucess':True if session_data else False,'session_data':session_data})
+  return jsonify({'success':True if session_data else False,'session_data':session_data})
 
 
 app.run(debug=True)
